@@ -6,20 +6,20 @@ import org.uncommons.watchmaker.framework.selection.RouletteWheelSelection;
 import org.uncommons.watchmaker.framework.termination.GenerationCount;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 public class TspAlg {
 
-    public static void main(String[] args) {
-        String problem = "XQF131"; // name of problem or path to input file
+    public static void main(String[] args) throws Exception {
+        String problem = "xqf131"; // name of problem or path to input file
 
-        int populationSize = 10; // size of population
-        int generations = 10; // number of generations
+        int solutionSize = 131;
+        int populationSize = 100; // size of population
+        int generations = 10000; // number of generations
 
         Random random = new Random(); // random
 
-        CandidateFactory<TspSolution> factory = new TspFactory(); // generation of solutions
+        CandidateFactory<TspSolution> factory = new TspFactory(solutionSize); // generation of solutions
 
         ArrayList<EvolutionaryOperator<TspSolution>> operators = new ArrayList<EvolutionaryOperator<TspSolution>>();
         operators.add(new TspCrossover()); // Crossover
@@ -27,6 +27,7 @@ public class TspAlg {
         EvolutionPipeline<TspSolution> pipeline = new EvolutionPipeline<TspSolution>(operators);
 
         SelectionStrategy<Object> selection = new RouletteWheelSelection(); // Selection operator
+//        SelectionStrategy<Object> selection = new TournamentSelection(ONE); // Selection operator
 
         FitnessEvaluator<TspSolution> evaluator = new TspFitnessFunction(problem); // Fitness function
 
