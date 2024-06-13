@@ -64,6 +64,14 @@ public class TspFitnessFunction implements FitnessEvaluator<TspSolution> {
             prev = next;
             accumulator += distance;
         }
+        int next = solutionPath[0];
+        int[] coordsPrev = this.coordinates[prev - 1];
+        int[] coordsNext = this.coordinates[next - 1];
+        double distance = Math.sqrt(
+                Math.pow(coordsPrev[1] - coordsNext[1], 2) +
+                        Math.pow(coordsPrev[2] - coordsNext[2], 2)
+        );
+        accumulator += distance;
         return accumulator;
     }
 
